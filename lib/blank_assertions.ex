@@ -40,6 +40,16 @@ defmodule BlankAssertions do
     end
   end
 
+  defmacro flunk(message \\ "Flunked!") do
+    quote do
+      assert false, message: unquote(message)
+    end
+  end
+
+  def assert_raise(exception, callback) do
+    ExUnit.Assertions.assert_raise exception, fn -> callback.call() end
+  end
+
   def assert(value, opts) do
     ExUnit.Assertions.assert(value, opts)
   end
@@ -48,11 +58,6 @@ defmodule BlankAssertions do
     ExUnit.Assertions.refute(value, opts)
   end
 
-  defmacro flunk(message \\ "Flunked!") do
-    quote do
-      assert false, message: unquote(message)
-    end
-  end
 
   defp contains_blank?(expr) do
     {_, blank} = Macro.prewalk(expr, false, &blank?/2)

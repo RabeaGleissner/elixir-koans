@@ -34,6 +34,23 @@ defmodule KoansHarnessTest do
     test_all(Lists, answers)
   end
 
+  test "Tuples" do
+    answers = [
+      3,
+      {:a, 1, "hi"},
+      "hi",
+      {:a, "bye"},
+      {:a, :new_thing, "hi"},
+      ArgumentError,
+      {"Huey", "Dewey", "Louie"},
+      {:this, :is, :awesome},
+      ArgumentError,
+      [:this, :can, :be, :a, :list]
+    ]
+
+    test_all(Tuples, answers)
+  end
+
   def test_all(module, answers) do
     module.all_koans
     |> Enum.zip(answers)
