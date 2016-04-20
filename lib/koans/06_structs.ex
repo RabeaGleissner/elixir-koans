@@ -7,34 +7,37 @@ defmodule Structs do
 
   koan "Structs are defined and named after a module" do
     person = %Person{}
-    assert person == ___
+    assert person == %Person{}
   end
 
+  # Mention defaulting to nil
   koan "You can access the fields of a struct" do
     nobody = %Person{}
-    assert nobody.age == ___
+    assert nobody.age == nil
   end
 
   koan "You can pass initial values to structs" do
     joe = %Person{name: "Joe", age: 23}
-    assert joe.name == ___
+    assert joe.name == "Joe"
   end
 
   koan "Update fields with the pipe '|' operator" do
     joe = %Person{name: "Joe", age: 23}
     older = %{ joe | age: joe.age + 10}
-    assert older.age == ___
+    assert older.age == 33
   end
 
+  # Don't think we need this
   koan "The original struct is not affected by updates" do
     joe = %Person{name: "Joe", age: 23}
-    assert %{ joe | age: joe.age + 10}.age == ___
-    assert joe.age == ___
+    assert %{ joe | age: joe.age + 10}.age == 33
+    assert joe.age == 23
   end
 
+  # Move to pattern matching?
   koan "You can pattern match into the fields of a struct" do
     %Person{age: age} = %Person{age: 22, name: "Silvia"}
-    assert age == ___
+    assert age == 22
   end
 
   defmodule Plane do
@@ -45,14 +48,14 @@ defmodule Structs do
   def plane?(_), do: false
 
   koan "Or onto the type of the struct itself" do
-    assert plane?(%Plane{passengers: 417, maker: :boeing}) == ___
-    assert plane?(%Person{}) == ___
+    assert plane?(%Plane{passengers: 417, maker: :boeing}) == true
+    assert plane?(%Person{}) == false
   end
 
-
+  # Better description
   koan "Are basically maps" do
     silvia = %Person{age: 22, name: "Silvia"}
 
-    assert Map.fetch!(silvia, :age) == ___
+    assert Map.fetch!(silvia, :age) == 22
   end
 end
